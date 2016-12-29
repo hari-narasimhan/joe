@@ -1,18 +1,26 @@
 {
   "name": "jso-ee",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "description": "JavaScript Object Expression Evaluator",
   "main": "src/index.js",
   "scripts": {
+    "commit": "git-cz",
     "clean": "rm -rf ./src/parser.js",
     "build": "jison ./grammar/parser.jison ./grammar/lexer.jisonlex -o ./src/parser.js",
-    "test": "mocha --slow 0 test"
+    "test": "mocha --slow 0 test",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hari-narasimhan/jso-ee.git"
+    "url": "https://github.com/hari-narasimhan/jso-ee.git"
   },
-  "keywords": ["JavaScript", "expression", "evaluator", "rule", "engine"],
+  "keywords": [
+    "JavaScript",
+    "expression",
+    "evaluator",
+    "rule",
+    "engine"
+  ],
   "author": "Hari Narasimhan <harin76@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -20,10 +28,16 @@
   },
   "homepage": "https://github.com/hari-narasimhan/jso-ee#readme",
   "devDependencies": {
+    "commitizen": "2.9.3",
+    "cz-conventional-changelog": "1.2.0",
     "jison": "0.4.17",
-    "mocha": "3.2.0"
+    "mocha": "3.2.0",
+    "semantic-release": "^6.3.2"
   },
   "dependencies": {
     "lodash": "4.17.3"
+  },
+  "czConfig" : {
+    "path" : "node_modules/cz-conventional-changelog"
   }
 }
