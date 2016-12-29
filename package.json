@@ -1,0 +1,29 @@
+{
+  "name": "jso-ee",
+  "version": "0.1.0",
+  "description": "JavaScript Object Expression Evaluator",
+  "main": "src/index.js",
+  "scripts": {
+    "clean": "rm -rf ./src/parser.js",
+    "build": "jison ./grammar/parser.jison ./grammar/lexer.jisonlex -o ./src/parser.js",
+    "test": "mocha --slow 0 test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hari-narasimhan/jso-ee.git"
+  },
+  "keywords": ["JavaScript", "expression", "evaluator", "rule", "engine"],
+  "author": "Hari Narasimhan <harin76@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hari-narasimhan/jso-ee/issues"
+  },
+  "homepage": "https://github.com/hari-narasimhan/jso-ee#readme",
+  "devDependencies": {
+    "jison": "0.4.17",
+    "mocha": "3.2.0"
+  },
+  "dependencies": {
+    "lodash": "4.17.3"
+  }
+}

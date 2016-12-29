@@ -1,2 +1,2 @@
-# joe
-JavaScript Object Evalulator
+# jso-ee
+JavaScript Object Expression Evaluator
