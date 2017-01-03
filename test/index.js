@@ -132,10 +132,10 @@ describe('SRPE', function() {
     it('should successfully parse standard math function call', function() {
       var tran = {};
 
-      var result = JSOEE.eval(' c = round(1000.12); d = min(10, 11)', tran);
+      var result = JSOEE.eval('d = 1000.12; c = round(d); f = min(10, 11)', tran);
 
       assert.equal(_.isObject(result), true);
-      const expected = { c: 1000, d: 10 };
+      const expected = { c: 1000, d: 1000.12, f: 10 };
       assert.deepEqual(expected, result);
     });
 

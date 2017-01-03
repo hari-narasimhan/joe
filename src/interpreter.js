@@ -233,7 +233,9 @@ ast.CallExpressionNode.prototype.eval = function(ctx) {
     throw new Error ('Unable to find function '
                       + JSON.stringify(this.callee.name));
   }
-  var args = this.arguments.map(function(item) { return item.value; });
+  var args = this.arguments.map(function(item) {
+    return item.eval(ctx);
+  });
   return fn.apply(ctx, args);
 };
 
