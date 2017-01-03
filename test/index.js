@@ -63,6 +63,9 @@ var switchCaseScript = `
 
 `;
 
+var nestedPropertyAccess = `
+  partnerCode = context.partner.code
+`;
 var errorScript = `
 # This is SRPE script
 
@@ -105,6 +108,25 @@ describe('SRPE', function() {
       assert.equal(_.isObject(result), true);
       const expectedCharges = 20;
       assert.equal(expectedCharges, result.charges);
+    });
+
+
+    it('should successfully parse access of nested properties', function() {
+      var tran = {
+        context: { partner: {code: 'EMPR'} },
+        campaignId: 'C001',
+        clicks: '1211',
+        impressions: '254112',
+        partnerCode: 'fltk',
+        useMatch: true,
+        costPerPricingModel: 0.10,
+      };
+
+      var result = JSOEE.eval(nestedPropertyAccess, tran);
+
+      assert.equal(_.isObject(result), true);
+      const expected = 'EMPR';
+      assert.equal(expected, result.partnerCode);
     });
 
     it('should throw error if switch statemet is used ', function() {

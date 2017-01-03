@@ -235,7 +235,7 @@ ast.CallExpressionNode.prototype.eval = function(ctx) {
 };
 
 ast.MemberExpressionNode.prototype.eval = function(ctx) {
-  return this.object.eval(ctx)[this.property.eval(ctx)];
+  return this.object.eval(ctx)[this.property.name];
 };
 
 ast.IdentifierNode.prototype.eval = function(ctx) {
