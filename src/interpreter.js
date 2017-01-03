@@ -226,12 +226,15 @@ ast.ConditionalExpressionNode.prototype.eval = function(ctx) {
 ast.CallExpressionNode.prototype.eval = function(ctx) {
   var fn = functions[this.callee.name];
 
+  // Check if the function is available in math library
+  fn = fn || Math[this.callee.name];
+
   if (!fn) {
     throw new Error ('Unable to find function '
                       + JSON.stringify(this.callee.name));
   }
-
-  return fn.apply(ctx, this.arguments);
+  var args = this.arguments.map(function(item) { return item.value; });
+  return fn.apply(ctx, args);
 };
 
 ast.MemberExpressionNode.prototype.eval = function(ctx) {

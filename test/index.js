@@ -129,6 +129,16 @@ describe('SRPE', function() {
       assert.equal(expected, result.partnerCode);
     });
 
+    it('should successfully parse standard math function call', function() {
+      var tran = {};
+
+      var result = JSOEE.eval(' c = round(1000.12); d = min(10, 11)', tran);
+
+      assert.equal(_.isObject(result), true);
+      const expected = { c: 1000, d: 10 };
+      assert.deepEqual(expected, result);
+    });
+
     it('should throw error if switch statemet is used ', function() {
 
       assert.throws(function() {
