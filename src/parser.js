@@ -759,124 +759,6 @@ function IfStatementNode(test, consequent, alternate, loc) {
 	this.loc = loc;
 }
 
-// function LabeledStatementNode(label, body, loc) {
-// 	this.type = "LabeledStatement";
-// 	this.label = label;
-// 	this.body = body;
-// 	this.loc = loc;
-// }
-
-// function BreakStatementNode(label, loc) {
-// 	this.type = "BreakStatement";
-// 	this.label = label;
-// 	this.loc = loc;
-// }
-//
-// function ContinueStatementNode(label, loc) {
-// 	this.type = "ContinueStatement";
-// 	this.label = label;
-// 	this.loc = loc;
-// }
-//
-// function WithStatementNode(object, body, loc) {
-// 	this.type = "WithStatement";
-// 	this.object = object;
-// 	this.body = body;
-// 	this.loc = loc;
-// }
-
-// function SwitchStatementNode(discriminant, cases, loc) {
-// 	this.type = "SwitchStatement";
-// 	this.discriminant = discriminant;
-// 	this.cases = cases;
-// 	this.loc = loc;
-// }
-
-// function ReturnStatementNode(argument, loc) {
-// 	this.type = "ReturnStatement";
-// 	this.argument = argument;
-// 	this.loc = loc;
-// }
-
-// function ThrowStatementNode(argument, loc) {
-// 	this.type = "ThrowStatement";
-// 	this.argument = argument;
-// 	this.loc = loc;
-// }
-
-// function TryStatementNode(block, handlers, finalizer, loc) {
-// 	this.type = "TryStatement";
-// 	this.block = block;
-// 	this.handlers = handlers; // Multiple catch clauses are SpiderMonkey specific
-// 	this.finalizer = finalizer;
-// 	this.loc = loc;
-// }
-//
-// function WhileStatementNode(test, body, loc) {
-// 	this.type = "WhileStatement";
-// 	this.test = test;
-// 	this.body = body;
-// 	this.loc = loc;
-// }
-//
-// function DoWhileStatementNode(body, test, loc) {
-// 	this.type = "DoWhileStatement";
-// 	this.body = body;
-// 	this.test = test;
-// 	this.loc = loc;
-// }
-//
-// function ForStatementNode(init, test, update, body, loc) {
-// 	this.type = "ForStatement";
-// 	this.init = init;
-// 	this.test = test;
-// 	this.update = update;
-// 	this.body = body;
-// 	this.loc = loc;
-// }
-//
-// function ForInStatementNode(left, right, body, loc) {
-// 	this.type = "ForInStatement";
-// 	this.left = left;
-// 	this.right = right;
-// 	this.body = body;
-// 	this.loc = loc;
-// }
-
-// function DebugggerStatementNode(loc) {
-// 	this.type = "DebuggerStatement";
-// 	this.loc = loc;
-// }
-
-// function FunctionDeclarationNode(id, params, body, generator, expression, loc) {
-// 	this.type = "FunctionDeclaration";
-// 	this.id = id;
-// 	this.params = params;
-// 	this.body = body;
-// 	this.generator = generator;
-// 	this.expression = expression;
-// 	this.loc = loc;
-// }
-//
-// function VariableDeclarationNode(declarations, kind, loc) {
-// 	this.type = "VariableDeclaration";
-// 	this.declarations = declarations;
-// 	this.kind = kind;
-// 	this.loc = loc;
-// }
-//
-// function VariableDeclaratorNode(id, init, loc) {
-// 	this.type = "VariableDeclarator";
-// 	this.id = id;
-// 	this.init = init;
-// 	this.loc = loc;
-// }
-//
-// function ThisExpressionNode(loc) {
-// 	this.type = "ThisExpression";
-// 	this.loc = loc;
-// }
-
 function ArrayExpressionNode(elements, loc) {
 	this.type = "ArrayExpression";
 	this.elements = elements;
@@ -888,16 +770,6 @@ function ObjectExpressionNode(properties, loc) {
 	this.properties = properties;
 	this.loc = loc;
 }
-
-// function FunctionExpressionNode(id, params, body, generator, expression, loc) {
-// 	this.type = "FunctionExpression";
-// 	this.id = id;
-// 	this.params = params;
-// 	this.body = body;
-// 	this.generator = generator;
-// 	this.expression = expression;
-// 	this.loc = loc;
-// }
 
 function SequenceExpressionNode(expressions, loc) {
 	this.type = "SequenceExpression";
@@ -929,14 +801,6 @@ function AssignmentExpressionNode(operator, left, right, loc) {
 	this.loc = loc;
 }
 
-// function UpdateExpressionNode(operator, argument, prefix, loc) {
-// 	this.type = "UpdateExpression";
-// 	this.operator = operator;
-// 	this.argument = argument;
-// 	this.prefix = prefix;
-// 	this.loc = loc;
-// }
-
 function LogicalExpressionNode(operator, left, right, loc) {
 	this.type = "LogicalExpression";
 	this.operator = operator;
@@ -953,13 +817,6 @@ function ConditionalExpressionNode(test, consequent, alternate, loc) {
 	this.loc = loc;
 }
 
-// function NewExpressionNode(callee, args, loc) {
-// 	this.type = "NewExpression";
-// 	this.callee = callee;
-// 	this.arguments = args;
-// 	this.loc = loc;
-// }
-//
 function CallExpressionNode(callee, args, loc) {
 	this.type = "CallExpression";
 	this.callee = callee;
@@ -981,14 +838,6 @@ function SwitchCaseNode(test, consequent, loc) {
 	this.consequent = consequent;
 	this.loc = loc;
 }
-
-// function CatchClauseNode(param, body, loc) {
-// 	this.type = "CatchClause";
-// 	this.param = param;
-// 	this.guard = null; /* Firefox specific */
-// 	this.body = body;
-// 	this.loc = loc;
-// }
 
 function IdentifierNode(name, loc) {
 	this.type = "Identifier";
@@ -1033,38 +882,17 @@ parser.ast.EmptyStatementNode = EmptyStatementNode;
 parser.ast.BlockStatementNode = BlockStatementNode;
 parser.ast.ExpressionStatementNode = ExpressionStatementNode;
 parser.ast.IfStatementNode = IfStatementNode;
-//parser.ast.LabeledStatementNode = LabeledStatementNode;
-//parser.ast.BreakStatementNode = BreakStatementNode;
-//parser.ast.ContinueStatementNode = ContinueStatementNode;
-//parser.ast.WithStatementNode = WithStatementNode;
-// parser.ast.SwitchStatementNode = SwitchStatementNode;
-// parser.ast.ReturnStatementNode = ReturnStatementNode;
-//parser.ast.ThrowStatementNode = ThrowStatementNode;
-//parser.ast.TryStatementNode = TryStatementNode;
-//parser.ast.WhileStatementNode = WhileStatementNode;
-//parser.ast.DoWhileStatementNode = DoWhileStatementNode;
-//parser.ast.ForStatementNode = ForStatementNode;
-//parser.ast.ForInStatementNode = ForInStatementNode;
-//parser.ast.DebugggerStatementNode = DebugggerStatementNode;
-//parser.ast.FunctionDeclarationNode = FunctionDeclarationNode;
-//parser.ast.VariableDeclarationNode = VariableDeclarationNode;
-//parser.ast.VariableDeclaratorNode = VariableDeclaratorNode;
-//parser.ast.ThisExpressionNode = ThisExpressionNode;
 parser.ast.ArrayExpressionNode = ArrayExpressionNode;
 parser.ast.ObjectExpressionNode = ObjectExpressionNode;
-//parser.ast.FunctionExpressionNode = FunctionExpressionNode;
 parser.ast.SequenceExpressionNode = SequenceExpressionNode;
 parser.ast.UnaryExpressionNode = UnaryExpressionNode;
 parser.ast.BinaryExpressionNode = BinaryExpressionNode;
 parser.ast.AssignmentExpressionNode = AssignmentExpressionNode;
-// parser.ast.UpdateExpressionNode = UpdateExpressionNode;
 parser.ast.LogicalExpressionNode = LogicalExpressionNode;
 parser.ast.ConditionalExpressionNode = ConditionalExpressionNode;
-//parser.ast.NewExpressionNode = NewExpressionNode;
 parser.ast.CallExpressionNode = CallExpressionNode;
 parser.ast.MemberExpressionNode = MemberExpressionNode;
 parser.ast.SwitchCaseNode = SwitchCaseNode;
-//parser.ast.CatchClauseNode = CatchClauseNode;
 parser.ast.IdentifierNode = IdentifierNode;
 parser.ast.LiteralNode = LiteralNode;
 /* generated by jison-lex 0.3.4 */
