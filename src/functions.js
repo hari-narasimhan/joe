@@ -10,8 +10,8 @@ module.exports = {
     }
 
     const values = table.values;
-    const i1 = values.findIndex((d) => d[0] === x);
-    const i2 = values[0].findIndex((d) => d === y);
+    const i1 = values.findIndex((d) => d[0] === row);
+    const i2 = values[0].findIndex((d) => d === col);
     return values[i1][i2];
   }
 };
