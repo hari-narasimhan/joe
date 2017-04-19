@@ -73,6 +73,12 @@ abc(
 
 `;
 
+
+var lookupScript = `
+ min_temperature = lookup('TEMPERATURES', city, 'min')
+ max_temperature = lookup('TEMPERATURES', city, 'max')
+`
+
 describe('SRPE', function() {
   describe('Simple Statement', function() {
     it('should successfully parse a simple script', function() {
@@ -159,5 +165,44 @@ describe('SRPE', function() {
         }
       }, Error);
     });
+
+
+    it('should return null when no lookup table is specified', function() {
+      var result = JSOEE.eval(lookupScript);
+      assert.equal(result.min_temperature, null);
+      assert.equal(result.max_temperature, null);
+    });
+
+    it('should return null if lookup tables does not contain table', function() {
+
+      var context = {lookupTables: [{}]}
+      var result = JSOEE.eval(lookupScript, context);
+      assert.equal(result.min_temperature, null);
+      assert.equal(result.max_temperature, null);
+    });
+
+    it('should return null if lookup tables are in improper format', function() {
+      var context = {lookupTables: [{name: 'TEMPERATURES', values:[]}], city: 'chennai'};
+      var result = JSOEE.eval(lookupScript, context);
+      assert.equal(result.min_temperature, null);
+      assert.equal(result.max_temperature, null);
+    });
+
+
+    it('should return proper lookup values', function() {
+      var context = {
+        lookupTables: [{name: 'TEMPERATURES',
+        values:[
+            ['city', 'min', 'max'],
+            ['chennai', 26, 41]
+          ]
+        }],
+        city: 'chennai'
+      };
+      var result = JSOEE.eval(lookupScript, context);
+      assert.equal(result.min_temperature, 26);
+      assert.equal(result.max_temperature, 41);
+    });
+
   })
 });
