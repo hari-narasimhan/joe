@@ -1,6 +1,19 @@
 'use strict';
 const _ = require('lodash')
 
+function fromTuple(array) {
+  const result = {};
+  if (!array) {
+    return result;
+  }
+  array.forEach(function(a){
+    if (a[0] && a[1]) {
+      result[a[0]] = a[1];
+    }
+  })
+  return result;
+}
+
 module.exports = {
   print: function() { console.log(arguments); },
   lookup: function (name, row, col) {
@@ -34,7 +47,8 @@ module.exports = {
       return null;
     }
     const values = table.values
-    const result = _.find(values, key);
+    const lookupKey = _.isArray(key) ? fromTuple(key) : key
+    const result = _.find(values, lookupKey);
 
     if (!result) {
       return null;

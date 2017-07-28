@@ -224,6 +224,23 @@ describe('SRPE', function() {
       assert.equal(result.temperature.max, 38);
     });
 
+    it('should return multi-key lookup values when key is a array of tuple', function() {
+      var context = {
+        lookupTables: [{name: 'TEMPERATURES',
+          values: [
+            {city: 'chennai', month: 'may', min: 35, max: 41},
+            {city: 'chennai', month: 'june', min: 31, max: 38},
+            {city: 'mumbai', month: 'may', min: 33, max: 41},
+            {city: 'mumbai', month: 'june', min: 28, max: 38},
+          ]
+        }],
+        lkey: [['city', 'chennai'], ['month', 'june']]
+      };
+      var result = JSOEE.eval(multiLookupScript, context);
+      assert.equal(result.min_temperature, 31);
+      assert.equal(result.temperature.max, 38);
+    });
+
   })
 
 });
