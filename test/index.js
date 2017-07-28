@@ -73,12 +73,6 @@ abc(
 
 `;
 
-
-var lookupScript = `
- min_temperature = lookup('TEMPERATURES', city, 'min')
- max_temperature = lookup('TEMPERATURES', city, 'max')
-`
-
 describe('SRPE', function() {
   describe('Simple Statement', function() {
     it('should successfully parse a simple script', function() {
@@ -188,6 +182,10 @@ describe('SRPE', function() {
       assert.equal(result.max_temperature, null);
     });
 
+    var lookupScript = `
+     min_temperature = lookup('TEMPERATURES', city, 'min')
+     max_temperature = lookup('TEMPERATURES', city, 'max')
+    `
 
     it('should return proper lookup values', function() {
       var context = {
@@ -204,5 +202,28 @@ describe('SRPE', function() {
       assert.equal(result.max_temperature, 41);
     });
 
+    var multiLookupScript = `
+      min_temperature = mlookup('TEMPERATURES', lkey, 'min')
+      temperature = mlookup('TEMPERATURES', lkey)
+    `;
+
+    it('should return multi-key lookup values', function() {
+      var context = {
+        lookupTables: [{name: 'TEMPERATURES',
+          values: [
+            {city: 'chennai', month: 'may', min: 35, max: 41},
+            {city: 'chennai', month: 'june', min: 31, max: 38},
+            {city: 'mumbai', month: 'may', min: 33, max: 41},
+            {city: 'mumbai', month: 'june', min: 28, max: 38},
+          ]
+        }],
+        lkey: {city: 'chennai', month: 'june'}
+      };
+      var result = JSOEE.eval(multiLookupScript, context);
+      assert.equal(result.min_temperature, 31);
+      assert.equal(result.temperature.max, 38);
+    });
+
   })
+
 });
