@@ -36,14 +36,14 @@ module.exports = {
       return null;
     }
 
-    const table = this.lookupTables.find((t) => t.name === name);
+    const values = getTableValues(this.lookupTables, name);
 
-    if (!table || !table.values || !table.values[0]) {
-      return null;
+    if (!values) {
+      return values
     }
-    const values = table.values;
-    const i1 = values.findIndex((d) => d[0] === row);
-    const i2 = values[0].findIndex((d) => d === col);
+
+    const i1 = values.findIndex(function (d) { return d[0] === row });
+    const i2 = values[0].findIndex(function (d) { return d === col });
 
     if (i1 < 0 || i2 < 0) {
       return null;
@@ -52,7 +52,7 @@ module.exports = {
   },
   mlookup: function (name, key, attrib) {
 
-    const values = getTableValues(this.lookupTables, name)
+    const values = getTableValues(this.lookupTables, name);
 
     if (!values) {
       return values
@@ -69,7 +69,7 @@ module.exports = {
 
   },
   rlookup: function (name,lkey, rkey, val, attrib) {
-    const values = getTableValues(this.lookupTables, name)
+    const values = getTableValues(this.lookupTables, name);
 
     if (!values) {
       return values
