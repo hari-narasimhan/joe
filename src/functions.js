@@ -14,6 +14,20 @@ function fromTuple(array) {
   return result;
 }
 
+function getTableValues (tables, name) {
+  if (!tables) {
+    return null;
+  }
+
+  const table = tables.find((t) => t.name === name)
+
+  if (!table || !table.values || !table.values[0]) {
+    return null;
+  }
+
+  return table.values;
+}
+
 module.exports = {
   print: function() { console.log(arguments); },
   lookup: function (name, row, col) {
@@ -36,17 +50,14 @@ module.exports = {
     }
     return values[i1][i2];
   },
-  mlookup: function (name, key, value) {
+  mlookup: function (name, key, attrib) {
 
-    if (!this.lookupTables) {
-      return null;
+    const values = getTableValues(this.lookupTables, name)
+
+    if (!values) {
+      return values
     }
 
-    const table = this.lookupTables.find((t) => t.name === name)
-    if (!table || !table.values || !table.values[0]) {
-      return null;
-    }
-    const values = table.values
     const lookupKey = _.isArray(key) ? fromTuple(key) : key
     const result = _.find(values, lookupKey);
 
@@ -54,7 +65,24 @@ module.exports = {
       return null;
     }
 
-    return value ? result[value] : result;
+    return attrib ? result[attrib] : result;
 
+  },
+  rlookup: function (name,lkey, rkey, val, attrib) {
+    const values = getTableValues(this.lookupTables, name)
+
+    if (!values) {
+      return values
+    }
+
+    const result = _.find(values, function (v) {
+      return (val >= v[lkey]) && (val <= v[rkey])
+    })
+
+    if (!result) {
+      return null;
+    }
+
+    return attrib ? result[attrib] : result;
   }
 };

@@ -241,6 +241,27 @@ describe('SRPE', function() {
       assert.equal(result.temperature.max, 38);
     });
 
+    const rangeLookupScript = `
+      ageClass = rlookup('AGE', 'from', 'to', age, 'class')
+      lookupResult = rlookup('AGE', 'from', 'to', age)
+    `;
+
+    it('should return range lookup values', function() {
+      var context = {
+        lookupTables: [{name: 'AGE',
+          values: [
+            {from: 0, to: 5, class: 'infant'},
+            {from: 6, to: 12, class: 'child'},
+            {from: 13, to: 18, class: 'young adult'},
+            {from: 18, to: 100, class: 'adult'},
+          ]
+        }],
+        age: 12
+      };
+      var result = JSOEE.eval(rangeLookupScript, context);
+      assert.equal(result.ageClass, 'child');
+      assert.equal(result.lookupResult.class, 'child');
+    });
   })
 
 });
