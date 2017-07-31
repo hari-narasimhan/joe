@@ -19,7 +19,7 @@ function getTableValues (tables, name) {
     return null;
   }
 
-  const table = tables.find((t) => t.name === name)
+  const table = tables.find(function (t) { return t.name === name })
 
   if (!table || !table.values || !table.values[0]) {
     return null;
