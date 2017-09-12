@@ -28,8 +28,12 @@ function getTableValues (tables, name) {
   return table.values;
 }
 
+
 module.exports = {
   print: function() { console.log(arguments); },
+  val: function (obj, attribute) {
+    return obj[attribute]
+  },
   lookup: function (name, row, col) {
 
     if (!this.lookupTables) {

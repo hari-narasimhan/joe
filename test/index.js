@@ -63,6 +63,11 @@ var switchCaseScript = `
 
 `;
 
+var valScript = `
+  likesCinema = val(likes, 'cinema')
+  likesFastFood = val(likes, 'fast food')
+`;
+
 var nestedPropertyAccess = `
   partnerCode = context.partner.code
 `;
@@ -261,6 +266,16 @@ describe('SRPE', function() {
       var result = JSOEE.eval(rangeLookupScript, context);
       assert.equal(result.ageClass, 'child');
       assert.equal(result.lookupResult.class, 'child');
+    });
+
+    it('should pick values from object', function() {
+      var context = {
+        age: 12,
+        likes: {cinema: true, 'fast food': false}
+      };
+      var result = JSOEE.eval(valScript, context);
+      assert.equal(result.likesCinema, true);
+      assert.equal(result.likesFastFood, false);
     });
   })
 
