@@ -85,7 +85,7 @@ ast.UnaryExpressionNode.prototype.eval = function(ctx) {
   var result;
   switch (operator) {
     case '+': {
-      result = +this.argument.eva(ctx);
+      result = +this.argument.eval(ctx);
       break;
     }
     case '-': {

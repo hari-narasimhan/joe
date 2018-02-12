@@ -277,6 +277,33 @@ describe('SRPE', function() {
       assert.equal(result.likesCinema, true);
       assert.equal(result.likesFastFood, false);
     });
+    
+    it('should generate tokens from script', function() {
+      var script = `
+      if(EquipmentType == 'Air source heat pump')
+      {
+      EERpre = (1-EL) * EERpost
+      HSPFpre = (1-EL) * HSPFpost
+      kWhC = Capacity * ((1/EERpre) - (1/EERpost)) * EFLHC * 0.001
+      kWhH = Capacity * ((1/HSPFpre) - (1/HSPFpost)) * EFLHH * 0.001
+      kWh = Q * (kWhC + kWhH)
+      kWs = Capacity * ((1/EERpre) - (1/EERpost)) * DFc * 0.001
+      kWw  = Capacity * ((1/HSPFpre) - (1/HSPFpost)) * DFh * 0.001
+      kW = Q * ( max(kWs,kWw ))
+      }
+      else
+      {
+      EERpre = (1-EL) * EERpost
+      HSPFpre = (1-EL) * HSPFpost
+      kWhC = Capacity * ((1/EERpre) - (1/EERpost)) * EFLHC * 0.001
+      kWh = Q * (kWhC)
+      kWs = Capacity * ((1/EERpre) - (1/EERpost)) * DFc * 0.001
+      kW = Q * kWs
+      }
+      `
+      var result = JSOEE.tokenize(script);
+      assert(result.length !== 0, true)
+    });
   })
 
 });

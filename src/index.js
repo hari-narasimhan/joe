@@ -26,7 +26,27 @@ var parse = function (script) {
   }
 }
 
+var tokenize = function (script) {
+  var tokens = [], tokenType, token
+  try {
+    var _parser = parser.parser
+    var lexer = _parser.lexer
+    lexer.setInput(script)
+    while(!lexer.done) {
+      tokenType = lexer.lex()
+      if (token in _parser.terminals_) {
+        token = _parser.terminals_[token];
+      }
+      tokens.push({tokenType: tokenType, token: lexer.yytext})
+    }
+    return tokens
+  } catch (err) {
+    throw new Error('Error occured parsing script', + err.toString())
+  }  
+}
+
 module.exports = {
   eval: evaluate,
-  parse: parse
+  parse: parse,
+  tokenize: tokenize
 };
