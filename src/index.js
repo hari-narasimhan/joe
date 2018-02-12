@@ -18,6 +18,15 @@ var evaluate = function(script, ctx) {
   }
 };
 
+var parse = function (script) {
+  try {
+    return parser.parse(script)
+  } catch (err) {
+    throw new Error('Error occured parsing script', + err.toString())
+  }
+}
+
 module.exports = {
   eval: evaluate,
+  parse: parse
 };
