@@ -277,7 +277,7 @@ describe('SRPE', function() {
       assert.equal(result.likesCinema, true);
       assert.equal(result.likesFastFood, false);
     });
-    
+
     it('should generate tokens from script', function() {
       var script = `
       if(EquipmentType == 'Air source heat pump')
@@ -304,6 +304,30 @@ describe('SRPE', function() {
       var result = JSOEE.tokenize(script);
       assert(result.length !== 0, true)
     });
+
+    it('should generate EOF token when script is empty', function() {
+      var script = ``
+      var result = JSOEE.tokenize(script);
+      assert(result.length === 1, true)
+    });
+
+    it ('should parse a valid date', function (){
+      var script = `d = parseDate(birthDay)`
+      var context = {
+        birthDay: '1981-03-30T18:30:00.000Z'
+      }
+      var result = JSOEE.eval(script, context);
+      assert.equal(result.d.toString(), new Date('1981-03-30T18:30:00.000Z').toString());
+    })
+
+    it ('should not parse an invalid date', function (){
+      var script = `d = parseDate(birthDay)`
+      var context = {
+        birthDay: '1981-AA'
+      }
+      var result = JSOEE.eval(script, context);
+      assert.equal(result.d, 'Invalid Date');
+    })
   })
 
 });

@@ -34,6 +34,9 @@ module.exports = {
   val: function (obj, attribute) {
     return obj[attribute]
   },
+  parseDate: function (date) {
+    return new Date(Date.parse(date))
+  },
   lookup: function (name, row, col) {
 
     if (!this.lookupTables) {
