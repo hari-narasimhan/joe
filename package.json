@@ -28,14 +28,14 @@
   },
   "homepage": "https://github.com/hari-narasimhan/jso-ee#readme",
   "devDependencies": {
-    "commitizen": "2.9.3",
+    "commitizen": "^2.10.1",
     "cz-conventional-changelog": "1.2.0",
-    "jison": "0.4.17",
-    "mocha": "3.2.0",
-    "semantic-release": "^6.3.2"
+    "jison": "0.4.18",
+    "mocha": "^5.2.0",
+    "semantic-release": "^15.5.0"
   },
   "dependencies": {
-    "lodash": "^4.17.3"
+    "lodash": "^4.17.10"
   },
   "config": {
     "commitizen": {
