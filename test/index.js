@@ -115,7 +115,6 @@ describe('SRPE', function() {
       assert.equal(expectedCharges, result.charges);
     });
 
-
     it('should successfully parse access of nested properties', function() {
       var tran = {
         context: { partner: {code: 'EMPR'} },
@@ -164,7 +163,6 @@ describe('SRPE', function() {
         }
       }, Error);
     });
-
 
     it('should return null when no lookup table is specified', function() {
       var result = JSOEE.eval(lookupScript);
@@ -328,6 +326,37 @@ describe('SRPE', function() {
       var result = JSOEE.eval(script, context);
       assert.equal(result.d, 'Invalid Date');
     })
+
+    it ('should accumulate errors when defined', function () {
+      var script = `
+        c = b/a
+        if (c < 0) {
+          ERROR('E001', 'b should be a positive number')
+        }
+      `
+      var context = {
+        a: 10,
+        b: -5
+      }
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.errors.length, 1)
+    })
+
+    it ('should accumulate warnings when defined', function () {
+      var script = `
+        c = b/a
+        if (c < 0) {
+          WARNING('E001', 'b should be a positive number')
+        }
+      `
+      var context = {
+        a: 10,
+        b: -5
+      }
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.warnings.length, 1)
+    })
+
   })
 
 });

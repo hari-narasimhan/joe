@@ -28,7 +28,6 @@ function getTableValues (tables, name) {
   return table.values;
 }
 
-
 module.exports = {
   print: function() { console.log(arguments); },
   val: function (obj, attribute) {
@@ -91,5 +90,13 @@ module.exports = {
     }
 
     return attrib ? result[attrib] : result;
-  }
+  },
+  ERROR: function (code, message) {
+    this.errors = this.errors || []
+    this.errors.push({code: code, message: message})
+  },
+  WARNING: function(code, message) {
+    this.warnings = this.warnings || []
+    this.warnings.push(({code: code, message: message}))
+  }  
 };
