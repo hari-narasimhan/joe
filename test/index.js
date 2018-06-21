@@ -357,6 +357,71 @@ describe('SRPE', function() {
       assert.equal(result.warnings.length, 1)
     })
 
+    it ('should calculate minBy', function () {
+      var script = `
+        minTempCity = minBy(cities, 'minT')
+      `
+      var context = {
+        cities: [{name: 'Chennai', minT: 25, maxT: 41}, {name: 'Bangalore', minT: 14, maxT: 36}, {name: 'Delhi', minT: 6, maxT: 44}]
+      }
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.minTempCity.name, 'Delhi')
+    })
+
+    it ('should calculate maxBy', function () {
+      var script = `
+        maxTempCity = maxBy(cities, 'minT')
+      `
+      var context = {
+        cities: [{name: 'Chennai', minT: 25, maxT: 41}, {name: 'Bangalore', minT: 14, maxT: 36}, {name: 'Delhi', minT: 6, maxT: 44}]
+      }
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.maxTempCity.name, 'Chennai')
+    })
+
+    it ('should calculate sumBy', function () {
+      var script = `
+        sumMinTemp = sumBy(cities, 'minT')
+      `
+      var context = {
+        cities: [{name: 'Chennai', minT: 25, maxT: 41}, {name: 'Bangalore', minT: 14, maxT: 36}, {name: 'Delhi', minT: 6, maxT: 44}]
+      }
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.sumMinTemp, 45)
+    })
+    it ('should calculate count', function () {
+      var script = `
+        count = count(cities)
+      `
+      var context = {
+        cities: [{name: 'Chennai', minT: 25, maxT: 41}, {name: 'Bangalore', minT: 14, maxT: 36}, {name: 'Delhi', minT: 6, maxT: 44}]
+      }
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.count, 3)
+    })
+
+    it ('should calculate avgBy', function () {
+      var script = `
+        avg = avgBy(cities, 'maxT')
+      `
+      var context = {
+        cities: [{name: 'Chennai', minT: 25, maxT: 41}, {name: 'Bangalore', minT: 14, maxT: 36}, {name: 'Delhi', minT: 6, maxT: 44}]
+      }
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.avg, (41 + 36 + 44) / 3)
+    })
+
+    it ('should calculate countDistinct', function () {
+      var script = `
+        count = countDistinct(cities, 'maxT')
+      `
+      var context = {
+        cities: [{name: 'Chennai', minT: 25, maxT: 44}, {name: 'Bangalore', minT: 14, maxT: 36}, {name: 'Delhi', minT: 6, maxT: 44}]
+      }
+      var result = JSOEE.eval(script, context)
+      // Chennai and Delhi have same maxT hence 2
+      assert.equal(result.count, 2)
+    })
   })
 
 });

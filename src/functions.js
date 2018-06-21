@@ -28,7 +28,7 @@ function getTableValues (tables, name) {
   return table.values;
 }
 
-module.exports = {
+var fns = {
   print: function() { console.log(arguments); },
   val: function (obj, attribute) {
     return obj[attribute]
@@ -95,8 +95,38 @@ module.exports = {
     this.errors = this.errors || []
     this.errors.push({code: code, message: message})
   },
-  WARNING: function(code, message) {
+  WARNING: function (code, message) {
     this.warnings = this.warnings || []
     this.warnings.push(({code: code, message: message}))
-  }  
+  },
+  minBy: function (coll, attr) {
+    return _.minBy(coll, function (o) {
+      return o[attr];
+    })
+  },
+  maxBy: function (coll, attr) {
+    return _.maxBy(coll, function (o) {
+      return o[attr]
+    })
+  },
+  sumBy: function (coll, attr) {
+    return _.sumBy(coll, function (o) {
+      // convert null and undefined to zero
+      return o[attr] || 0;
+    })
+  },
+  count: function (coll) {
+    return _.isArray(coll) ? coll.length : 0;
+  },
+  countDistinct: function (coll, attr) {
+    const uniq = _.uniqBy(coll, function (o) {
+      return o[attr];
+    })
+    return _.isArray(uniq) ? uniq.length : 0;
+  },
+  avgBy: function (coll, attr) {
+    return fns.sumBy(coll, attr) / fns.count(coll);
+  }
 };
+
+module.exports = fns
