@@ -359,24 +359,24 @@ describe('SRPE', function() {
 
     it ('should calculate minBy', function () {
       var script = `
-        minTempCity = minBy(cities, 'minT')
+        minTemp = minBy(cities, 'minT')
       `
       var context = {
         cities: [{name: 'Chennai', minT: 25, maxT: 41}, {name: 'Bangalore', minT: 14, maxT: 36}, {name: 'Delhi', minT: 6, maxT: 44}]
       }
       var result = JSOEE.eval(script, context)
-      assert.equal(result.minTempCity.name, 'Delhi')
+      assert.equal(result.minTemp, 6)
     })
 
     it ('should calculate maxBy', function () {
       var script = `
-        maxTempCity = maxBy(cities, 'minT')
+        maxTemp = maxBy(cities, 'minT')
       `
       var context = {
         cities: [{name: 'Chennai', minT: 25, maxT: 41}, {name: 'Bangalore', minT: 14, maxT: 36}, {name: 'Delhi', minT: 6, maxT: 44}]
       }
       var result = JSOEE.eval(script, context)
-      assert.equal(result.maxTempCity.name, 'Chennai')
+      assert.equal(result.maxTemp, 25)
     })
 
     it ('should calculate sumBy', function () {

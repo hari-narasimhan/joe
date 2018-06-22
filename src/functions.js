@@ -100,14 +100,16 @@ var fns = {
     this.warnings.push(({code: code, message: message}))
   },
   minBy: function (coll, attr) {
-    return _.minBy(coll, function (o) {
+    const result = _.minBy(coll, function (o) {
       return o[attr];
     })
+    return result ? result[attr] : null;
   },
   maxBy: function (coll, attr) {
-    return _.maxBy(coll, function (o) {
+    const result = _.maxBy(coll, function (o) {
       return o[attr]
     })
+    return result ? result[attr] : null;
   },
   sumBy: function (coll, attr) {
     return _.sumBy(coll, function (o) {
