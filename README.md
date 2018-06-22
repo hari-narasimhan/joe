@@ -1,5 +1,5 @@
 # jso-ee
-JavaScript Object Expression Evaluator
+## JavaScript Object Expression Evaluator
 
 jso-ee is a simple expression parser for objects. it handles arithmetic expression, logical expression assignments and if statement. There is no need to declare variables they are created on the fly and added to the context. The expression language is similar to javascript [ECMAScript 5.1], actually it uses the JavaScript parser written by Colin Ihrig [https://github.com/cjihrig/jsparser] behind the scene.
 
