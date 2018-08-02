@@ -33,6 +33,9 @@ var fns = {
   val: function (obj, attribute) {
     return obj[attribute]
   },
+  valAt: function (arr, index) {
+    return _.nth(arr, index)
+  },
   parseDate: function (date) {
     return new Date(Date.parse(date))
   },
