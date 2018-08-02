@@ -443,7 +443,30 @@ describe('SRPE', function() {
         pb = valAt(programBudget, 0)
       `
       var result = JSOEE.eval(script, context)
-      // Chennai and Delhi have same maxT hence 2
+      assert.equal(result.pb.amount, 50000)
+      
+    })
+
+    it ('should return head of an array', function () {
+      const data = `
+      {
+      "_id": "5b45e3b10f28343b36f7667b",
+      "programBudget": [
+      {
+          "amount": 50000,
+          "startDate": "2018-07-31T18:30:00.000Z",
+          "endDate": "2019-08-30T18:30:00.000Z",
+          "id": "717294f0-9643-11e8-9308-5b3f2bf0c472",
+          "programId": "660734a0-8f3f-11e8-9615-49ce8863b9a9"
+      }
+          ]
+      }
+      `
+      const context = JSON.parse(data)
+      const script = `
+        pb = head(programBudget)
+      `
+      var result = JSOEE.eval(script, context)
       assert.equal(result.pb.amount, 50000)
       
     })
