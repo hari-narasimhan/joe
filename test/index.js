@@ -470,6 +470,28 @@ describe('SRPE', function() {
       assert.equal(result.pb.amount, 50000)
       
     })
+
+    it ('should return extract assignments from script', function () {
+      const script = `
+        pb = head(programBudget)
+      `
+      var result = JSOEE.extractAssignments(script)
+      var expected = [ { tokenType: 'IDENTIFIER', token: 'pb' } ]
+      assert.equal(result.length, expected.length)      
+    })
+
+    it ('should return extract identifiers from script', function () {
+      const script = `
+        pb = head(programBudget)
+      `
+      var result = JSOEE.extractIdentifiers(script)
+      var expected = [
+        { tokenType: 'IDENTIFIER', token: 'pb' },
+        { tokenType: 'IDENTIFIER', token: 'programBudget' }
+      ]
+
+      assert.equal(result.length, expected.length)      
+    })
   })
 
 });
