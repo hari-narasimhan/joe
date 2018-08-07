@@ -471,6 +471,37 @@ describe('SRPE', function() {
       
     })
 
+    it ('should return first element of an array', function () {
+      const data = `
+      {
+      "_id": "5b45e3b10f28343b36f7667b",
+      "names": ["ram", "shyam", "kumar"]
+      }
+      `
+      const context = JSON.parse(data)
+      const script = `
+        name = first(names)
+      `
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.name, 'ram')
+    })
+
+
+    it ('should return last element of an array', function () {
+      const data = `
+      {
+      "_id": "5b45e3b10f28343b36f7667b",
+      "names": ["ram", "shyam", "kumar"]
+      }
+      `
+      const context = JSON.parse(data)
+      const script = `
+        name = last(names)
+      `
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.name, 'kumar')
+    })
+
     it ('should return extract assignments from script', function () {
       const script = `
         pb = head(programBudget)

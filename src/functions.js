@@ -39,6 +39,12 @@ var fns = {
   head: function (arr) {
     return _.head(arr)
   },
+  first: function (arr) {
+    return _.first(arr)
+  },  
+  last: function (arr) {
+    return _.last(arr)
+  },  
   parseDate: function (date) {
     return new Date(Date.parse(date))
   },
