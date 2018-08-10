@@ -129,6 +129,9 @@ var fns = {
   filter: function (coll, predicate) {
     return _.filter(coll, predicate)
   },
+  find: function (coll, predicate) {
+    return _.find(coll, predicate)
+  },  
   sumBy: function (coll, attr) {
     return _.sumBy(coll, function (o) {
       // convert null and undefined to zero
