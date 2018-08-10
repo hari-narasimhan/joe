@@ -502,6 +502,71 @@ describe('SRPE', function() {
       assert.equal(result.name, 'kumar')
     })
 
+    it ('should collect arrays', function () {
+      const data = `
+      {
+        "measures": [
+          {"outputs": [{"name": "kw", "value": 10}, {"name": "watts", "value": 20}, {"name": "rpm", "value": 15}]},
+          {"outputs": [{"name": "kw", "value": 12}, {"name": "rpm", "value": 20}, {"name": "watts", "value": 15}]}
+        ]
+      }
+      `
+      const context = JSON.parse(data)
+      const script = `
+        all = collectArrays(measures, 'outputs')
+      `
+      var result = JSOEE.eval(script, context)
+      const expected = [ { name: 'kw', value: 10 },
+      { name: 'watts', value: 20 },
+      { name: 'rpm', value: 15 },
+      { name: 'kw', value: 12 },
+      { name: 'rpm', value: 20 },
+      { name: 'watts', value: 15 } ]
+      assert.equal(result.all.length,expected.length)
+    })
+    it ('should filter arrays', function () {
+      const data = `
+      {
+        "measures": [
+          {"outputs": [{"name": "kw", "value": 10}, {"name": "watts", "value": 20}, {"name": "rpm", "value": 15}]},
+          {"outputs": [{"name": "kw", "value": 12}, {"name": "rpm", "value": 20}, {"name": "watts", "value": 15}]}
+        ]
+      }
+      `
+      const context = JSON.parse(data)
+      const script = `
+        all = collectArrays(measures, 'outputs')
+        filtered = filter(all, ['name', 'kw'])
+      `
+      var result = JSOEE.eval(script, context)
+      const expected = [ { name: 'kw', value: 10 },
+      { name: 'watts', value: 20 },
+      { name: 'rpm', value: 15 },
+      { name: 'kw', value: 12 },
+      { name: 'rpm', value: 20 },
+      { name: 'watts', value: 15 } ]
+      assert.equal(result.all.length,expected.length)
+    })
+
+    it ('should combine collectArrays filter and sumBy', function () {
+      const data = `
+      {
+        "measures": [
+          {"outputs": [{"name": "kw", "value": 10}, {"name": "watts", "value": 20}, {"name": "rpm", "value": 15}]},
+          {"outputs": [{"name": "kw", "value": 12}, {"name": "rpm", "value": 20}, {"name": "watts", "value": 15}]}
+        ]
+      }
+      `
+      const context = JSON.parse(data)
+      const script = `
+        all = collectArrays(measures, 'outputs')
+        filtered = filter(all, ['name', 'kw'])
+        totalKw = sumBy(filtered, 'value')
+      `
+      var result = JSOEE.eval(script, context)
+      const expected = 22
+      assert.equal(result.totalKw, 22)
+    })
     it ('should return extract assignments from script', function () {
       const script = `
         pb = head(programBudget)

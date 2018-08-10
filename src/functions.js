@@ -111,6 +111,9 @@ var fns = {
     this.warnings = this.warnings || []
     this.warnings.push(({code: code, message: message}))
   },
+  find: function (coll, predicate) {
+    return _.find(coll, predicate)
+  },
   minBy: function (coll, attr) {
     const result = _.minBy(coll, function (o) {
       return o[attr];
@@ -123,11 +126,23 @@ var fns = {
     })
     return result ? result[attr] : null;
   },
+  filter: function (coll, predicate) {
+    return _.filter(coll, predicate)
+  },
   sumBy: function (coll, attr) {
     return _.sumBy(coll, function (o) {
       // convert null and undefined to zero
       return o[attr] || 0;
     })
+  },
+  collectArrays: function (coll, attr) {
+    let result = []
+    coll.forEach(function(c){
+      if (Array.isArray(c[attr])) {
+        result = _.concat(result, c[attr])
+      }
+    })
+    return result
   },
   count: function (coll) {
     return _.isArray(coll) ? coll.length : 0;
