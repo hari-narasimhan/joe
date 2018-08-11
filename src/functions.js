@@ -30,8 +30,14 @@ function getTableValues (tables, name) {
 
 var fns = {
   print: function() { console.log(arguments); },
+  set: function (obj, attribute, value) {
+    _.set(obj, attribute, value)
+  },
+  unset: function (obj, attribute) {
+    _.set(obj, attribute)
+  },
   val: function (obj, attribute) {
-    return obj[attribute]
+    return _.get(obj, attribute)
   },
   valAt: function (arr, index) {
     return _.nth(arr, index)
@@ -41,10 +47,10 @@ var fns = {
   },
   first: function (arr) {
     return _.first(arr)
-  },  
+  },
   last: function (arr) {
     return _.last(arr)
-  },  
+  },
   parseDate: function (date) {
     return new Date(Date.parse(date))
   },
@@ -116,13 +122,13 @@ var fns = {
   },
   minBy: function (coll, attr) {
     const result = _.minBy(coll, function (o) {
-      return o[attr];
+      return _.get(o, attr);
     })
     return result ? result[attr] : null;
   },
   maxBy: function (coll, attr) {
     const result = _.maxBy(coll, function (o) {
-      return o[attr]
+      return _.get(o, attr);
     })
     return result ? result[attr] : null;
   },
@@ -131,11 +137,11 @@ var fns = {
   },
   find: function (coll, predicate) {
     return _.find(coll, predicate)
-  },  
+  },
   sumBy: function (coll, attr) {
     return _.sumBy(coll, function (o) {
       // convert null and undefined to zero
-      return o[attr] || 0;
+      return _.get(o, attr, 0);
     })
   },
   collectArrays: function (coll, attr) {
@@ -152,7 +158,7 @@ var fns = {
   },
   countDistinct: function (coll, attr) {
     const uniq = _.uniqBy(coll, function (o) {
-      return o[attr];
+      return _.get(o, attr);
     })
     return _.isArray(uniq) ? uniq.length : 0;
   },
