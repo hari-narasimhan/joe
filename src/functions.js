@@ -117,9 +117,6 @@ var fns = {
     this.warnings = this.warnings || []
     this.warnings.push(({code: code, message: message}))
   },
-  find: function (coll, predicate) {
-    return _.find(coll, predicate)
-  },
   minBy: function (coll, attr) {
     const result = _.minBy(coll, function (o) {
       return _.get(o, attr);
