@@ -368,12 +368,35 @@ describe('SRPE', function() {
       assert.equal(result.minTemp, 6)
     })
 
+    it ('should calculate minBy of an inner attribute', function () {
+      var script = `
+        minTemp = minBy(cities, 'temp.minT')
+      `
+      var context = {
+        cities: [{name: 'Chennai', temp: {minT: 25, maxT: 41}}, {name: 'Bangalore', temp: {minT: 14, maxT: 36}}, {name: 'Delhi', temp: {minT: 6, maxT: 44}}]
+      }
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.minTemp, 6)
+    })
+
+
     it ('should calculate maxBy', function () {
       var script = `
         maxTemp = maxBy(cities, 'minT')
       `
       var context = {
         cities: [{name: 'Chennai', minT: 25, maxT: 41}, {name: 'Bangalore', minT: 14, maxT: 36}, {name: 'Delhi', minT: 6, maxT: 44}]
+      }
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.maxTemp, 25)
+    })
+
+    it ('should calculate maxBy of inner an inner attribute', function () {
+      var script = `
+        maxTemp = maxBy(cities, 'temp.minT')
+      `
+      var context = {
+        cities: [{name: 'Chennai', temp: {minT: 25, maxT: 41}}, {name: 'Bangalore', temp: {minT: 14, maxT: 36}}, {name: 'Delhi', temp: {minT: 6, maxT: 44}}]
       }
       var result = JSOEE.eval(script, context)
       assert.equal(result.maxTemp, 25)
@@ -411,12 +434,25 @@ describe('SRPE', function() {
       assert.equal(result.avg, (41 + 36 + 44) / 3)
     })
 
+    
     it ('should calculate countDistinct', function () {
       var script = `
         count = countDistinct(cities, 'maxT')
       `
       var context = {
         cities: [{name: 'Chennai', minT: 25, maxT: 44}, {name: 'Bangalore', minT: 14, maxT: 36}, {name: 'Delhi', minT: 6, maxT: 44}]
+      }
+      var result = JSOEE.eval(script, context)
+      // Chennai and Delhi have same maxT hence 2
+      assert.equal(result.count, 2)
+    })
+
+    it ('should calculate countDistinct with inner attribute', function () {
+      var script = `
+        count = countDistinct(cities, 'temp.maxT')
+      `
+      var context = {
+        cities: [{name: 'Chennai', temp: {minT: 25, maxT: 44}}, {name: 'Bangalore', temp: {minT: 14, maxT: 36}}, {name: 'Delhi', temp: {minT: 6, maxT: 44}}]
       }
       var result = JSOEE.eval(script, context)
       // Chennai and Delhi have same maxT hence 2

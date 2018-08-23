@@ -121,13 +121,13 @@ var fns = {
     const result = _.minBy(coll, function (o) {
       return _.get(o, attr);
     })
-    return result ? result[attr] : null;
+    return result ? _.get(result, attr) : null;
   },
   maxBy: function (coll, attr) {
     const result = _.maxBy(coll, function (o) {
       return _.get(o, attr);
     })
-    return result ? result[attr] : null;
+    return result ? _.get(result, attr) : null;
   },
   filter: function (coll, predicate) {
     return _.filter(coll, predicate)
