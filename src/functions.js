@@ -1,25 +1,28 @@
 'use strict';
-const _ = require('lodash')
+
+var _ = require('lodash');
 
 function fromTuple(array) {
-  const result = {};
+  var result = {};
   if (!array) {
     return result;
   }
-  array.forEach(function(a){
+  array.forEach(function (a) {
     if (a[0] && a[1]) {
       result[a[0]] = a[1];
     }
-  })
+  });
   return result;
 }
 
-function getTableValues (tables, name) {
+function getTableValues(tables, name) {
   if (!tables) {
     return null;
   }
 
-  const table = tables.find(function (t) { return t.name === name })
+  var table = tables.find(function (t) {
+    return t.name === name;
+  });
 
   if (!table || !table.values || !table.values[0]) {
     return null;
@@ -29,79 +32,67 @@ function getTableValues (tables, name) {
 }
 
 var fns = {
-  print: function() { console.log(arguments); },
-  set: function (obj, attribute, value) {
-    _.set(obj, attribute, value)
+  print: function print() {
+    console.log(arguments);
   },
-  unset: function (obj, attribute) {
-    _.set(obj, attribute)
+  set: function set(obj, attribute, value) {
+    _.set(obj, attribute, value);
   },
-  val: function (obj, attribute) {
-    return _.get(obj, attribute)
+  unset: function unset(obj, attribute) {
+    _.set(obj, attribute);
   },
-  valAt: function (arr, index) {
-    return _.nth(arr, index)
+  val: function val(obj, attribute) {
+    return _.get(obj, attribute);
   },
-  head: function (arr) {
-    return _.head(arr)
+  valAt: function valAt(arr, index) {
+    return _.nth(arr, index);
   },
-  first: function (arr) {
-    return _.first(arr)
+  head: function head(arr) {
+    return _.head(arr);
   },
-  last: function (arr) {
-    return _.last(arr)
+  first: function first(arr) {
+    return _.first(arr);
   },
-  parseDate: function (date) {
-    return new Date(Date.parse(date))
+  last: function last(arr) {
+    return _.last(arr);
   },
-  lookup: function (name, row, col) {
+  parseDate: function parseDate(date) {
+    return new Date(Date.parse(date));
+  },
+  lookup: function lookup(name, row, col) {
 
     if (!this.lookupTables) {
       return null;
     }
 
-    const values = getTableValues(this.lookupTables, name);
+    var values = getTableValues(this.lookupTables, name);
 
     if (!values) {
-      return values
+      return values;
     }
 
-    const i1 = values.findIndex(function (d) { return d[0] === row });
-    const i2 = values[0].findIndex(function (d) { return d === col });
+    var i1 = values.findIndex(function (d) {
+      return d[0] === row;
+    });
+    var i2 = values[0].findIndex(function (d) {
+      return d === col;
+    });
 
     if (i1 < 0 || i2 < 0) {
       return null;
     }
     return values[i1][i2];
   },
-  mlookup: function (name, key, attrib) {
+  mlookup: function mlookup(name, key, attrib) {
 
-    const values = getTableValues(this.lookupTables, name);
-
-    if (!values) {
-      return values
-    }
-
-    const lookupKey = _.isArray(key) ? fromTuple(key) : key
-    const result = _.find(values, lookupKey);
-
-    if (!result) {
-      return null;
-    }
-
-    return attrib ? result[attrib] : result;
-
-  },
-  rlookup: function (name,lkey, rkey, val, attrib) {
-    const values = getTableValues(this.lookupTables, name);
+    var values = getTableValues(this.lookupTables, name);
 
     if (!values) {
-      return values
+      return values;
     }
 
-    const result = _.find(values, function (v) {
-      return (val >= v[lkey]) && (val <= v[rkey])
-    })
+    var lookupKey = _.isArray(key) ? fromTuple(key) : key;
+    var result = _.find(values, lookupKey);
 
     if (!result) {
       return null;
@@ -109,59 +100,76 @@ var fns = {
 
     return attrib ? result[attrib] : result;
   },
-  ERROR: function (code, message) {
-    this.errors = this.errors || []
-    this.errors.push({code: code, message: message})
+  rlookup: function rlookup(name, lkey, rkey, val, attrib) {
+    var values = getTableValues(this.lookupTables, name);
+
+    if (!values) {
+      return values;
+    }
+
+    var result = _.find(values, function (v) {
+      return val >= v[lkey] && val <= v[rkey];
+    });
+
+    if (!result) {
+      return null;
+    }
+
+    return attrib ? result[attrib] : result;
   },
-  WARNING: function (code, message) {
-    this.warnings = this.warnings || []
-    this.warnings.push(({code: code, message: message}))
+  ERROR: function ERROR(code, message) {
+    this.errors = this.errors || [];
+    this.errors.push({ code: code, message: message });
   },
-  minBy: function (coll, attr) {
-    const result = _.minBy(coll, function (o) {
+  WARNING: function WARNING(code, message) {
+    this.warnings = this.warnings || [];
+    this.warnings.push({ code: code, message: message });
+  },
+  minBy: function minBy(coll, attr) {
+    var result = _.minBy(coll, function (o) {
       return _.get(o, attr);
-    })
+    });
     return result ? _.get(result, attr) : null;
   },
-  maxBy: function (coll, attr) {
-    const result = _.maxBy(coll, function (o) {
+  maxBy: function maxBy(coll, attr) {
+    var result = _.maxBy(coll, function (o) {
       return _.get(o, attr);
-    })
+    });
     return result ? _.get(result, attr) : null;
   },
-  filter: function (coll, predicate) {
-    return _.filter(coll, predicate)
+  filter: function filter(coll, predicate) {
+    return _.filter(coll, predicate);
   },
-  find: function (coll, predicate) {
-    return _.find(coll, predicate)
+  find: function find(coll, predicate) {
+    return _.find(coll, predicate);
   },
-  sumBy: function (coll, attr) {
+  sumBy: function sumBy(coll, attr) {
     return _.sumBy(coll, function (o) {
       // convert null and undefined to zero
       return _.get(o, attr, 0);
-    })
+    });
   },
-  collectArrays: function (coll, attr) {
-    let result = []
-    coll.forEach(function(c){
+  collectArrays: function collectArrays(coll, attr) {
+    var result = [];
+    coll.forEach(function (c) {
       if (Array.isArray(c[attr])) {
-        result = _.concat(result, c[attr])
+        result = _.concat(result, c[attr]);
       }
-    })
-    return result
+    });
+    return result;
   },
-  count: function (coll) {
+  count: function count(coll) {
     return _.isArray(coll) ? coll.length : 0;
   },
-  countDistinct: function (coll, attr) {
-    const uniq = _.uniqBy(coll, function (o) {
+  countDistinct: function countDistinct(coll, attr) {
+    var uniq = _.uniqBy(coll, function (o) {
       return _.get(o, attr);
-    })
+    });
     return _.isArray(uniq) ? uniq.length : 0;
   },
-  avgBy: function (coll, attr) {
+  avgBy: function avgBy(coll, attr) {
     return fns.sumBy(coll, attr) / fns.count(coll);
   }
 };
 
-module.exports = fns
+module.exports = fns;
