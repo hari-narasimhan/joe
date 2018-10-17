@@ -37,6 +37,7 @@
     "travis-deploy-once": "^5.0.1"
   },
   "dependencies": {
+    "dateformat": "^3.0.3",
     "lodash": "^4.17.10"
   },
   "config": {

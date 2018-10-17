@@ -624,6 +624,31 @@ describe('SRPE', function() {
 
       assert.equal(result.length, expected.length)      
     })
+
+    it ('should return current year', function () {
+      const script = `
+        year = currentYear()
+      `
+      var now = new Date()
+      var result = JSOEE.eval(script)
+      var year = now.getFullYear()
+      var expected = { year }      
+  
+      assert.equal(result.year, expected.year)      
+    })
+
+    it ('should return current date', function () {
+      const script = `
+        date = formatDate('yyyy-mm-dd')
+      `
+      var now = new Date()
+      var result = JSOEE.eval(script)
+      var date = now.toISOString().split('T')[0]
+      var expected = { date }      
+  
+      assert.equal(result.date, expected.date)      
+    })
+
   })
 
 });

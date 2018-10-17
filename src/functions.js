@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var dateFormat = require('dateformat')
 
 function fromTuple(array) {
   var result = {};
@@ -169,6 +170,15 @@ var fns = {
   },
   avgBy: function avgBy(coll, attr) {
     return fns.sumBy(coll, attr) / fns.count(coll);
+  },
+  currentYear: function() {
+    var now = new Date()
+    return parseInt(dateFormat(now, 'yyyy'))
+  },
+  formatDate: function(format, date) {
+    format = format || 'yyyymmdd'
+    var now = date || new Date()
+    return dateFormat(now, format)
   }
 };
 
