@@ -162,23 +162,28 @@ var fns = {
   count: function count(coll) {
     return _.isArray(coll) ? coll.length : 0;
   },
-  countDistinct: function countDistinct(coll, attr) {
+  countDistinct: function countDistinct (coll, attr) {
     var uniq = _.uniqBy(coll, function (o) {
       return _.get(o, attr);
     });
     return _.isArray(uniq) ? uniq.length : 0;
   },
-  avgBy: function avgBy(coll, attr) {
+  avgBy: function avgBy (coll, attr) {
     return fns.sumBy(coll, attr) / fns.count(coll);
   },
-  currentYear: function() {
+  currentYear: function () {
     var now = new Date()
     return parseInt(dateFormat(now, 'yyyy'))
   },
-  formatDate: function(format, date) {
+  formatDate: function (format, date) {
     format = format || 'yyyymmdd'
     var now = date || new Date()
     return dateFormat(now, format)
+  },
+  filterExpression: function (expression, ctx) {
+    expression = expression || ''
+    ctx = ctx || 'ctx'
+    return new Function (ctx, 'return ' + expression)
   }
 };
 

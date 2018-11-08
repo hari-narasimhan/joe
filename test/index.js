@@ -559,6 +559,7 @@ describe('SRPE', function() {
       { name: 'rpm', value: 20 },
       { name: 'watts', value: 15 } ]
       assert.equal(result.all.length,expected.length)
+
     })
     it ('should filter arrays', function () {
       const data = `
@@ -575,13 +576,12 @@ describe('SRPE', function() {
         filtered = filter(all, ['name', 'kw'])
       `
       var result = JSOEE.eval(script, context)
-      const expected = [ { name: 'kw', value: 10 },
-      { name: 'watts', value: 20 },
-      { name: 'rpm', value: 15 },
-      { name: 'kw', value: 12 },
-      { name: 'rpm', value: 20 },
-      { name: 'watts', value: 15 } ]
-      assert.equal(result.all.length,expected.length)
+      const expected = [
+        { name: 'kw', value: 10 },
+        { name: 'kw', value: 12 }
+      ]
+
+      assert.equal(result.filtered.length,expected.length)
     })
 
     it ('should combine collectArrays filter and sumBy', function () {
@@ -647,6 +647,45 @@ describe('SRPE', function() {
       var expected = { date }      
   
       assert.equal(result.date, expected.date)      
+    })
+
+    it ('should create filter expression function', function () {
+      const data = `
+      {
+        "measures": [
+          {"outputs": [{"name": "kw", "value": 10}, {"name": "watts", "value": 20}, {"name": "rpm", "value": 15}]},
+          {"outputs": [{"name": "kw", "value": 12}, {"name": "rpm", "value": 20}, {"name": "watts", "value": 15}]}
+        ]
+      }
+      `
+      const context = JSON.parse(data)
+      const script = `
+        all = collectArrays(measures, 'outputs')
+        predicate = filterExpression('ctx.value === 10')
+        filtered = filter(all, predicate)
+      `
+      var result = JSOEE.eval(script, context)
+      const expected = [ { name: 'kw', value: 10 }]
+      assert.equal(result.filtered.length,expected.length)
+    })
+
+    it ('should create filter expression function with dates', function () {
+      const data = `
+      {
+        "measures": [
+          {"outputs": [{"name": "kw", "value": 10, "installedDate": "2018-11-08T09:24:50.636Z"}, {"name": "watts", "value": 20, "installedDate": "2018-10-08T09:24:50.636Z"}, {"name": "rpm", "value": 15}]},
+          {"outputs": [{"name": "kw", "value": 12, "installedDate": "2018-12-08T09:24:50.636Z"}, {"name": "rpm", "value": 20}, {"name": "watts", "value": 15}]}
+        ]
+      }
+      `
+      const context = JSON.parse(data)
+      const script = `
+        all = collectArrays(measures, 'outputs')
+        predicate = filterExpression('Date.parse(root.installedDate) >= Date.parse("2018-10-01")', 'root')
+        filtered = filter(all, predicate)
+      `
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.filtered.length,3)
     })
 
   })
