@@ -42,8 +42,8 @@ var fns = {
   unset: function unset(obj, attribute) {
     _.set(obj, attribute);
   },
-  val: function val(obj, attribute) {
-    return _.get(obj, attribute);
+  val: function val(obj, attribute, defaultValue) {
+    return _.get(obj, attribute, defaultValue);
   },
   valAt: function valAt(arr, index) {
     return _.nth(arr, index);
@@ -184,6 +184,9 @@ var fns = {
     expression = expression || ''
     ctx = ctx || 'ctx'
     return new Function (ctx, 'return ' + expression)
+  },
+  isEmpty: function (val) {
+    return _.isEmpty(val)
   }
 };
 

@@ -276,6 +276,18 @@ describe('SRPE', function() {
       assert.equal(result.likesFastFood, false);
     });
 
+    it('should pick values from object and substitute default value', function() {
+      var context = {
+        age: 12,
+        likes: {cinema: true, 'fast food': false}
+      };
+      var script = `
+        likesSports = val(likes, 'sports', 'N/A') 
+      `
+      var result = JSOEE.eval(script, context);
+      assert.equal(result.likesSports, 'N/A')
+    });
+
     it('should generate tokens from script', function() {
       var script = `
       if(EquipmentType == 'Air source heat pump')
@@ -688,6 +700,30 @@ describe('SRPE', function() {
       assert.equal(result.filtered.length,3)
     })
 
+    it ('should check emptiness', function () {
+      const data = `
+      {
+        "measure" : {
+          "name": null,
+          "code": "abc",
+          "market": {},
+          "authority": "" 
+        }
+      }
+      `
+      const context = JSON.parse(data)
+      const script = `
+        emptyName = isEmpty(measure.name)
+        emptyCode = isEmpty(measure.code)
+        emptyMarket = isEmpty(measure.market)
+        emptyAuthority = isEmpty(measure.authority)
+      `
+      var result = JSOEE.eval(script, context)
+      assert.equal(result.emptyName, true)
+      assert.equal(result.emptyCode, false)
+      assert.equal(result.emptyMarket, true)
+      assert.equal(result.emptyAuthority, true)
+    })
   })
 
 });
