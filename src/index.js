@@ -28,6 +28,17 @@ var parse = function (script) {
   }
 }
 
+var isValid = function (script) {
+  var ret = {isValid: true}
+  try {
+    parser.parse(script)
+  } catch (err) {
+    ret.isValid = false
+    ret.error = {message: err.toString()}
+  }
+  return ret
+}
+
 var tokenize = function (script) {
   var tokens = [], tokenType, token
   try {
@@ -116,6 +127,7 @@ var extractAssignments = function (script) {
 module.exports = {
   eval: evaluate,
   parse: parse,
+  isValid: isValid,
   tokenize: tokenize,
   extractAssignments: extractAssignments,
   extractIdentifiers: extractIdentifiers

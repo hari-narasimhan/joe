@@ -12,7 +12,7 @@ jso-ee is a simple expression parser for objects. it handles arithmetic expressi
 
 ## Usage
 ```
-  var JSOEE = require(jso-ee);
+  var JSOEE = require('jso-ee');
   var script = `
     charges = cost * 0.5
 

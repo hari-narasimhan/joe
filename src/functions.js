@@ -36,6 +36,16 @@ var fns = {
   print: function print() {
     console.log(arguments);
   },
+  // Override math.round with ours
+  round: function round (number, precision) {
+    return _.round(number, precision)
+  },
+  ceil: function ceil (number, precision) {
+    return _.ceil(number, precision)
+  },
+  floor: function floor (number, precision) {
+    return _.floor(number, precision)
+  },
   set: function set(obj, attribute, value) {
     _.set(obj, attribute, value);
   },

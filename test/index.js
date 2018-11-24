@@ -724,6 +724,65 @@ describe('SRPE', function() {
       assert.equal(result.emptyMarket, true)
       assert.equal(result.emptyAuthority, true)
     })
+
+    it ('should round numbers', function () {
+      const script = `
+        round1 = round(100.127)
+        round2 = round(100.127, 1)
+        round3 = round(100.127, 2)
+
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { round1: 100, round2: 100.1, round3: 100.13 }
+      assert.equal(result.round1, expected.round1)
+      assert.equal(result.round2, expected.round2)
+      assert.equal(result.round3, expected.round3)
+    })
+
+    it ('should ceil numbers', function () {
+      const script = `
+        ceil1 = round(100.126)
+        ceil2 = round(100.126, 1)
+        ceil3 = round(100.126, 2)
+
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { ceil1: 100, ceil2: 100.1, ceil3: 100.13 }
+      assert.equal(result.ceil1, expected.ceil1)
+      assert.equal(result.ceil2, expected.ceil2)
+      assert.equal(result.ceil3, expected.ceil3)
+    })
+
+    it ('should floor numbers', function () {
+      const script = `
+        floor1 = round(100.123)
+        floor2 = round(100.123, 1)
+        floor3 = round(100.123, 2)
+
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { floor1: 100, floor2: 100.1, floor3: 100.12 }
+      assert.equal(result.floor1, expected.floor1)
+      assert.equal(result.floor2, expected.floor2)
+      assert.equal(result.floor3, expected.floor3)
+    })
+
+    it ('should return error when script is invalid', function () {
+      const script = `
+        round1 = "round(100.123,)'
+      `
+      var result = JSOEE.isValid(script, {})
+      assert.equal(result.isValid, false)
+    })
+
+    it ('should return isValid as true for valid script', function () {
+      const script = `
+        round1 = "round(100.123)"
+      `
+      var result = JSOEE.isValid(script, {})
+      assert.equal(result.isValid, true)
+    })
+
   })
 
 });
