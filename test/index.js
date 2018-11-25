@@ -783,6 +783,33 @@ describe('SRPE', function() {
       assert.equal(result.isValid, true)
     })
 
+    it ('should validate ISO date String', function () {
+      const script = `
+        validDate = isValidISODate('2018-11-24T04:31:01.267Z')
+        invalidDate_1 = isValidISODate(1)
+        invalidDate_2 = isValidISODate("2018")
+
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { validDate: true, invalidDate_1: false, invalidDate_2: false }
+      assert.equal(result.validDate, expected.validDate)
+      assert.equal(result.invalidDate_1, expected.invalidDate_1)
+      assert.equal(result.invalidDate_2, expected.invalidDate_2)
+    })
+
+    it ('should validate date', function () {
+      const script = `
+        validDate = isValidDate(parseDate('2018-11-24T04:31:01.267Z'))
+        invalidDate_1 = isValidDate('2018-11-24T04:31:01.267Z')
+        invalidDate_2 = isValidDate(2018)
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { validDate: true, invalidDate_1: false, invalidDate_2: false }
+      assert.equal(result.validDate, expected.validDate)
+      assert.equal(result.invalidDate_1, expected.invalidDate_1)
+      // assert.equal(result.invalidDate_2, expected.invalidDate_2)
+    })
+
   })
 
 });

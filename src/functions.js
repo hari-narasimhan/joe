@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var dateFormat = require('dateformat')
+var isoDate = require('@segment/isodate')
 
 function fromTuple(array) {
   var result = {};
@@ -69,6 +70,14 @@ var fns = {
   },
   parseDate: function parseDate(date) {
     return new Date(Date.parse(date));
+  },
+  isValidISODate: function (date, isStrict) {
+    isStrict = isStrict || true
+    // Enforce strict checking
+    return isoDate.is(date, isStrict)
+  },
+  isValidDate: function (date) {
+    return _.isDate(date)
   },
   lookup: function lookup(name, row, col) {
 
