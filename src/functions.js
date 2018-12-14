@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var dateFormat = require('dateformat')
 var isoDate = require('@segment/isodate')
+var math = require('mathjs')
 
 function fromTuple(array) {
   var result = {};
@@ -39,13 +40,16 @@ var fns = {
   },
   // Override math.round with ours
   round: function round (number, precision) {
-    return _.round(number, precision)
+    precision = precision || 0
+    return math.round(number, precision)
   },
   ceil: function ceil (number, precision) {
-    return _.ceil(number, precision)
+    precision = precision || 0
+    return math.ceil(number, precision)
   },
   floor: function floor (number, precision) {
-    return _.floor(number, precision)
+    precision = precision || 0
+    return math.floor(number, precision)
   },
   set: function set(obj, attribute, value) {
     _.set(obj, attribute, value);

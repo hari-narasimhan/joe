@@ -739,6 +739,27 @@ describe('SRPE', function() {
       assert.equal(result.round3, expected.round3)
     })
 
+    it ('should round numbers with proper precision', function () {
+      const script = `
+        x = 7.7
+        ninetyNinePercent = 99/100
+        value = x * ninetyNinePercent
+
+        round1 = round(100.127)
+        round2 = round(100.127, 1)
+        round3 = round(100.127, 2)
+        valueRound = round(value, 3)
+
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { round1: 100, round2: 100.1, round3: 100.13, valueRound: 7.623 }
+      assert.equal(result.round1, expected.round1)
+      assert.equal(result.round2, expected.round2)
+      assert.equal(result.round3, expected.round3)
+      assert.equal(result.valueRound, expected.valueRound)
+    })
+
+
     it ('should ceil numbers', function () {
       const script = `
         ceil1 = round(100.126)

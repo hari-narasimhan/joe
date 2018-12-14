@@ -39,7 +39,8 @@
   "dependencies": {
     "@segment/isodate": "^1.0.3",
     "dateformat": "^3.0.3",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.10",
+    "mathjs": "^5.4.0"
   },
   "config": {
     "commitizen": {
