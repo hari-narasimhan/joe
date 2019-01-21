@@ -210,6 +210,19 @@ var fns = {
   },
   isEmpty: function (val) {
     return _.isEmpty(val)
+  },
+  strContains: function (string, pattern) {
+    if (!string) {
+      return false
+    }
+    return string.indexOf(pattern) !== -1
+  },
+  matchRegex: function (string, regexStr) {
+    if (!string || !regexStr) {
+      return false
+    }
+    var regex = new RegExp(regexStr)
+    return regex.test(string)
   }
 };
 

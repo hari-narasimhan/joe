@@ -657,7 +657,6 @@ describe('SRPE', function() {
       var result = JSOEE.eval(script)
       var date = now.toISOString().split('T')[0]
       var expected = { date }      
-  
       assert.equal(result.date, expected.date)      
     })
 
@@ -830,6 +829,67 @@ describe('SRPE', function() {
       assert.equal(result.invalidDate_1, expected.invalidDate_1)
       // assert.equal(result.invalidDate_2, expected.invalidDate_2)
     })
+
+    it ('should check if string contains a pattern', function () {
+      const script = `
+        str = 'Hello,world'
+        pattern = 'llo,w'
+        contains = strContains(str, pattern)
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { contains: true}
+      assert.equal(result.contains, expected.contains)
+      // assert.equal(result.invalidDate_2, expected.invalidDate_2)
+    })
+
+    it ('should return false if string is undefined in strContains call', function () {
+      const script = `
+        str = undefined
+        pattern = 'llo,w'
+        contains = strContains(str, pattern)
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { contains: false}
+      assert.equal(result.contains, expected.contains)
+      // assert.equal(result.invalidDate_2, expected.invalidDate_2)
+    })
+
+    it ('should return false if pattern is undefined in strContains call', function () {
+      const script = `
+        str = 'Hello,world'
+        pattern = undefined
+        contains = strContains(str, pattern)
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { contains: false}
+      assert.equal(result.contains, expected.contains)
+      // assert.equal(result.invalidDate_2, expected.invalidDate_2)
+    })
+
+    it ('should test regex patterns', function () {
+      const script = `
+        email = 'joe.abc@acme.com'
+        pattern = 'j*\.com'
+        isValid = matchRegex(email, pattern)
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { isValid: true }
+      assert.equal(result.isValid, expected.isValid)
+      // assert.equal(result.invalidDate_2, expected.invalidDate_2)
+    })
+
+    it ('should test regex patterns for containing characters', function () {
+      const script = `
+        email = 'joe*abc@acme.com'
+        pattern = '[.|@|*]'
+        isValid = matchRegex(email, pattern)
+      `
+      var result = JSOEE.eval(script, {})
+      const expected = { isValid: true }
+      assert.equal(result.isValid, expected.isValid)
+      // assert.equal(result.invalidDate_2, expected.invalidDate_2)
+    })
+
 
   })
 
