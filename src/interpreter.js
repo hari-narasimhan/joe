@@ -224,10 +224,14 @@ ast.ConditionalExpressionNode.prototype.eval = function(ctx) {
 };
 
 ast.CallExpressionNode.prototype.eval = function(ctx) {
+  // check the functions in global function 
   var fn = functions[this.callee.name];
 
   // Check if the function is available in math library
   fn = fn || Math[this.callee.name];
+
+  // last resort check lodash - note lodash should be the last since it overrides Math functions
+  fn = fn || _[this.callee.name];
 
   if (!fn) {
     throw new Error ('Unable to find function '

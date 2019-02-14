@@ -890,6 +890,19 @@ describe('SRPE', function() {
       // assert.equal(result.invalidDate_2, expected.invalidDate_2)
     })
 
+    it ('should be able to find difference between two arrays using differenceBy', function () {
+      const array1 = [{code: 'A001', age: 21}, {code: 'A002'}, {code: 'A003'}, {code: 'A004'}]
+      const array2 = [{code: 'A001', age: 21}, {code: 'A022'}, {code: 'A003'}, {code: 'A004'}]
+
+      const script = `
+        difference = differenceBy(array1, array2, 'code')
+      `
+      var result = JSOEE.eval(script, {array1, array2})
+      const expected = [{ code: 'A002'}]
+      assert.equal(result.difference.length, 1)
+      assert.equal(result.difference[0].code, expected[0].code)
+      // assert.equal(result.invalidDate_2, expected.invalidDate_2)
+    })
 
   })
 
