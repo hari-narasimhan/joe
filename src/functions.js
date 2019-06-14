@@ -217,6 +217,18 @@ var fns = {
     }
     return string.indexOf(pattern) !== -1
   },
+  substr: function (string, start, end) {
+    if (!string) {
+      return null
+    }
+    return string.substr(start, end)
+  },
+  substring: function (string, start, end) {
+    if (!string) {
+      return null
+    }
+    return string.substring(start, end)
+  },
   matchRegex: function (string, regexStr) {
     if (!string || !regexStr) {
       return false

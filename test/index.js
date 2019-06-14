@@ -904,6 +904,44 @@ describe('SRPE', function() {
       // assert.equal(result.invalidDate_2, expected.invalidDate_2)
     })
 
+    it ('should return substring of a string - using substr fn', function () {
+
+      const script = `
+        value1 = substr(longString, 0, 4)
+        value2 = substr()
+        value3 = substr(longString, 5, 2)
+      `
+      var result = JSOEE.eval(script, {longString: "this is a long string"})
+      const expected1 = 'this'
+      const expected2 = null
+      const expected3 = 'is'
+
+      assert.equal(expected1, result.value1)
+      assert.equal(expected2, result.value2)
+      assert.equal(expected3, result.value3)
+      
+      // assert.equal(result.invalidDate_2, expected.invalidDate_2)
+    })
+
+    it ('should return substring of a string - using substring fn', function () {
+
+      const script = `
+        value1 = substring(longString, 0, 4)
+        value2 = substring()
+        value3 = substring(longString, 5, 7)
+      `
+      var result = JSOEE.eval(script, {longString: "this is a long string"})
+      const expected1 = 'this'
+      const expected2 = null
+      const expected3 = 'is'
+
+      assert.equal(expected1, result.value1)
+      assert.equal(expected2, result.value2)
+      assert.equal(expected3, result.value3)
+      
+      // assert.equal(result.invalidDate_2, expected.invalidDate_2)
+    })
+
   })
 
 });
