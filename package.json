@@ -1,6 +1,6 @@
 {
   "name": "jso-ee",
-  "version": "0.0.0-development",
+  "version": "0.26.0-development",
   "description": "JavaScript Object Expression Evaluator",
   "main": "src/index.js",
   "scripts": {
