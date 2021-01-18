@@ -29,17 +29,17 @@
   },
   "homepage": "https://github.com/hari-narasimhan/jso-ee#readme",
   "devDependencies": {
-    "commitizen": "^3.1.1",
+    "commitizen": "^4.2.3",
     "cz-conventional-changelog": "1.2.0",
     "jison": "0.4.18",
-    "mocha": "^5.2.0",
-    "semantic-release": "^15.13.16",
+    "mocha": "^8.2.1",
+    "semantic-release": "^17.3.3",
     "travis-deploy-once": "^5.0.11"
   },
   "dependencies": {
     "@segment/isodate": "^1.0.3",
     "dateformat": "^3.0.3",
-    "lodash": ">=4.17.11",
+    "lodash": "^4.17.20",
     "mathjs": "^5.4.2"
   },
   "config": {
