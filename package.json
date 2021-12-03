@@ -4,12 +4,9 @@
   "description": "JavaScript Object Expression Evaluator",
   "main": "src/index.js",
   "scripts": {
-    "commit": "git-cz",
     "clean": "rm -rf ./src/parser.js",
     "build": "jison ./grammar/parser.jison ./grammar/lexer.jisonlex -o ./src/parser.js",
-    "test": "mocha --slow 0 test",
-    "semantic-release": "semantic-release",
-    "travis-deploy-once": "travis-deploy-once"
+    "test": "mocha --slow 0 test"
   },
   "repository": {
     "type": "git",
@@ -29,12 +26,8 @@
   },
   "homepage": "https://github.com/hari-narasimhan/jso-ee#readme",
   "devDependencies": {
-    "commitizen": "4.2.4",
-    "cz-conventional-changelog": "1.2.0",
     "jison": "0.4.18",
-    "mocha": "9.1.3",
-    "semantic-release": "18.0.1",
-    "travis-deploy-once": "^5.0.11"
+    "mocha": "9.1.3"
   },
   "dependencies": {
     "@segment/isodate": "^1.0.3",
